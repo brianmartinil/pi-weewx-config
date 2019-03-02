@@ -40,4 +40,12 @@ echo "Removing some unneeded packages..."
 apt-get remove -y --force-yes --purge triggerhappy logrotate dphys-swapfile fake-hwclock
 apt-get -y --force-yes autoremove --purge
 
+echo "Adding midnight reboot..."
+if ! grep "reboot" /etc/crontab; then
+  echo "00 00 * * * root reboot" >> /etc/crontab
+  /etc/init.d/cron restart
+fi
+
 echo "Done"
+
+echo "Make sure you change your password!!!!"
